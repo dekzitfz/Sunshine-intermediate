@@ -30,7 +30,7 @@ public class ForecastItemViewHolder extends RecyclerView.ViewHolder {
     public void bind(DummyForecast data){
         day.setText(data.getDay());
         weatherDesc.setText(data.getWeather());
-        maxTemp.setText(String.valueOf(data.getMaxTemp()));
-        minTemp.setText(String.valueOf(data.getMinTemp()));
+        maxTemp.setText(data.getResolvedTemp(data.getMaxTemp()));
+        minTemp.setText(data.getResolvedTemp(data.getMinTemp()));
     }
 }

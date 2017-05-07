@@ -69,4 +69,8 @@ public class DummyForecast {
                 ", weatherID=" + weatherID +
                 '}';
     }
+
+    public String getResolvedTemp(int temp){
+        return temp+"\u00b0";
+    }
 }
