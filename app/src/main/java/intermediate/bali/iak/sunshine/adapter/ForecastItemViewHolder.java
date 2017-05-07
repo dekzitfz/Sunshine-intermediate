@@ -24,13 +24,13 @@ public class ForecastItemViewHolder extends RecyclerView.ViewHolder {
 
     public ForecastItemViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(itemView);
+        ButterKnife.bind(this,itemView);
     }
 
     public void bind(DummyForecast data){
         day.setText(data.getDay());
         weatherDesc.setText(data.getWeather());
-        maxTemp.setText(data.getMaxTemp());
-        minTemp.setText(data.getMinTemp());
+        maxTemp.setText(String.valueOf(data.getMaxTemp()));
+        minTemp.setText(String.valueOf(data.getMinTemp()));
     }
 }
