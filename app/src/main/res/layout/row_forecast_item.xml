@@ -10,6 +10,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:id="@+id/img_weather"
         android:src="@drawable/art_clear"
         android:layout_weight="0.2"
         android:layout_width="0dp"
@@ -23,12 +24,14 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:textSize="20sp"
-            android:text="Sunday"
+            android:id="@+id/tv_day"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Sunday"
+            android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/tv_weatherDesc"
             android:text="Sunny"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -42,13 +45,14 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_maxTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="28sp"
             tools:text="19\u00b0" />
 
         <TextView
+            android:id="@+id/tv_minTemp"
             android:gravity="end"
             android:textSize="28sp"
             tools:text="15\u00b0"
