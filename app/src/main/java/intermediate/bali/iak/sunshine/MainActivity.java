@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import intermediate.bali.iak.sunshine.adapter.ListForecastAdapter;
 import intermediate.bali.iak.sunshine.model.DailyForecast;
 import intermediate.bali.iak.sunshine.model.DummyForecast;
+import intermediate.bali.iak.sunshine.model.WeatherItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rv_forecast)RecyclerView rv;
 
     private ListForecastAdapter adapter;
-    private List<DummyForecast> list = new ArrayList<>();
+    private List<WeatherItem> list = new ArrayList<>();
     private Gson gson = new Gson();
 
     @Override
@@ -46,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
-        populateData();
+        getDataFromAPI();
     }
 
-    private void populateData(){
+    /*private void populateData(){
         for(int i=0;i<10;i++){
             DummyForecast dummy = new DummyForecast("Sunday","Rainy",23,18,123);
             list.add(dummy);
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
         getDataFromAPI();
-    }
+    }*/
 
     private void getDataFromAPI(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -73,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             DailyForecast dailyForecast = gson.fromJson(response,DailyForecast.class);
                             Log.d(TAG,dailyForecast.toString());
+                            for(WeatherItem item : dailyForecast.getList()){
+                                list.add(item);
+                            }
+                            adapter.notifyDataSetChanged();
                         } catch (Exception e){
                             Log.e(TAG,e.getMessage());
                         }

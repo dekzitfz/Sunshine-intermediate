@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import intermediate.bali.iak.sunshine.R;
 import intermediate.bali.iak.sunshine.model.DummyForecast;
+import intermediate.bali.iak.sunshine.model.WeatherItem;
 
 /**
  * Created by DEKZ on 5/7/2017.
@@ -27,10 +28,9 @@ public class ForecastItemViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this,itemView);
     }
 
-    public void bind(DummyForecast data){
-        day.setText(data.getDay());
-        weatherDesc.setText(data.getWeather());
-        maxTemp.setText(data.getResolvedTemp(data.getMaxTemp()));
-        minTemp.setText(data.getResolvedTemp(data.getMinTemp()));
+    public void bind(WeatherItem data){
+        weatherDesc.setText(data.getWeather().get(0).getDescription());
+        maxTemp.setText(data.getTemp().getResolvedTemp(data.getTemp().getMax()));
+        minTemp.setText(data.getTemp().getResolvedTemp(data.getTemp().getMin()));
     }
 }

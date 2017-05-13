@@ -9,6 +9,7 @@ import java.util.List;
 
 import intermediate.bali.iak.sunshine.R;
 import intermediate.bali.iak.sunshine.model.DummyForecast;
+import intermediate.bali.iak.sunshine.model.WeatherItem;
 
 /**
  * Created by DEKZ on 5/7/2017.
@@ -16,9 +17,9 @@ import intermediate.bali.iak.sunshine.model.DummyForecast;
 
 public class ListForecastAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<DummyForecast> list = new ArrayList<>();
+    private List<WeatherItem> list = new ArrayList<>();
 
-    public ListForecastAdapter(List<DummyForecast> list) {
+    public ListForecastAdapter(List<WeatherItem> list) {
         this.list = list;
     }
 
