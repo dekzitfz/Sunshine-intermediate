@@ -18,6 +18,8 @@ import intermediate.bali.iak.sunshine.model.WeatherItem;
 public class ListForecastAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<WeatherItem> list = new ArrayList<>();
+    private static final int VIEW_TODAY = 0;
+    private static final int VIEW_OTHER = 1;
 
     public ListForecastAdapter(List<WeatherItem> list) {
         this.list = list;
@@ -25,17 +27,38 @@ public class ListForecastAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ForecastItemViewHolder(LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.row_forecast_item, parent, false));
+        if(viewType == VIEW_TODAY){
+            return new TodayItemForecastViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.row_today_forcast, parent, false));
+        }else{
+            return new ForecastItemViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.row_forecast_item, parent, false));
+        }
+
+
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ForecastItemViewHolder) holder).bind(list.get(position));
+        if(getItemViewType(position) == 0){
+            ((TodayItemForecastViewHolder) holder).bind(list.get(position));
+        }else{
+            ((ForecastItemViewHolder) holder).bind(list.get(position));
+        }
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(position == 0){
+            //top position aka Today
+            return VIEW_TODAY;
+        }else{
+            return VIEW_OTHER;
+        }
     }
 }
