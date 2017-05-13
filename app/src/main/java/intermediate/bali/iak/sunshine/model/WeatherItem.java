@@ -1,5 +1,8 @@
 package intermediate.bali.iak.sunshine.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,5 +45,11 @@ public class WeatherItem {
                 ", temp=" + temp +
                 ", weather=" + weather +
                 '}';
+    }
+
+    public String getReadableTime(){
+        Date date = new Date(dt * 1000L);
+        DateFormat format = new SimpleDateFormat("EEEE");
+        return format.format(date);
     }
 }

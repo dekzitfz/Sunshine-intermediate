@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import intermediate.bali.iak.sunshine.R;
 import intermediate.bali.iak.sunshine.model.DummyForecast;
 import intermediate.bali.iak.sunshine.model.WeatherItem;
+import intermediate.bali.iak.sunshine.utilities.SunshineWeatherUtils;
 
 /**
  * Created by DEKZ on 5/7/2017.
@@ -29,6 +30,15 @@ public class ForecastItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(WeatherItem data){
+
+        img.setImageResource(
+                SunshineWeatherUtils
+                        .getSmallArtResourceIdForWeatherCondition(
+                                data.getWeather().get(0).getId()
+                        )
+        );
+
+        day.setText(data.getReadableTime());
         weatherDesc.setText(data.getWeather().get(0).getDescription());
         maxTemp.setText(data.getTemp().getResolvedTemp(data.getTemp().getMax()));
         minTemp.setText(data.getTemp().getResolvedTemp(data.getTemp().getMin()));
