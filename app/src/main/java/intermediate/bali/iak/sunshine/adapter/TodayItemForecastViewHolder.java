@@ -28,7 +28,7 @@ public class TodayItemForecastViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this,itemView);
     }
 
-    public void bind(WeatherItem data){
+    public void bind(final WeatherItem data, final OnClickListener clickListener){
         img.setImageResource(
                 SunshineWeatherUtils
                         .getSmallArtResourceIdForWeatherCondition(
@@ -40,5 +40,12 @@ public class TodayItemForecastViewHolder extends RecyclerView.ViewHolder {
         weatherDesc.setText(data.getWeather().get(0).getDescription());
         maxTemp.setText(data.getTemp().getResolvedTemp(data.getTemp().getMax()));
         minTemp.setText(data.getTemp().getResolvedTemp(data.getTemp().getMin()));
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.onItemClick(data,0);
+            }
+        });
     }
 }

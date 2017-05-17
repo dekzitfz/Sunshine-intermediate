@@ -1,5 +1,6 @@
 package intermediate.bali.iak.sunshine;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,11 +22,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import intermediate.bali.iak.sunshine.adapter.ListForecastAdapter;
+import intermediate.bali.iak.sunshine.adapter.OnClickListener;
 import intermediate.bali.iak.sunshine.model.DailyForecast;
 import intermediate.bali.iak.sunshine.model.DummyForecast;
 import intermediate.bali.iak.sunshine.model.WeatherItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private final static String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.rv_forecast)RecyclerView rv;
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                                 list.add(item);
                             }
                             adapter.notifyDataSetChanged();
+                            adapter.setClickListener(MainActivity.this);
                         } catch (Exception e){
                             Log.e(TAG,e.getMessage());
                         }
@@ -103,5 +106,10 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
 
+    }
+
+    @Override
+    public void onItemClick(WeatherItem data, int position) {
+        startActivity(new Intent(MainActivity.this, DetailActivity.class));
     }
 }

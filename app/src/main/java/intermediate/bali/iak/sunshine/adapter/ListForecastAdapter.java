@@ -1,5 +1,6 @@
 package intermediate.bali.iak.sunshine.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import intermediate.bali.iak.sunshine.MainActivity;
 import intermediate.bali.iak.sunshine.R;
 import intermediate.bali.iak.sunshine.model.DummyForecast;
 import intermediate.bali.iak.sunshine.model.WeatherItem;
@@ -20,9 +22,14 @@ public class ListForecastAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<WeatherItem> list = new ArrayList<>();
     private static final int VIEW_TODAY = 0;
     private static final int VIEW_OTHER = 1;
+    private OnClickListener clickListener;
 
     public ListForecastAdapter(List<WeatherItem> list) {
         this.list = list;
+    }
+
+    public void setClickListener(OnClickListener clickListener){
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -41,9 +48,9 @@ public class ListForecastAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(getItemViewType(position) == 0){
-            ((TodayItemForecastViewHolder) holder).bind(list.get(position));
+            ((TodayItemForecastViewHolder) holder).bind(list.get(position),clickListener);
         }else{
-            ((ForecastItemViewHolder) holder).bind(list.get(position));
+            ((ForecastItemViewHolder) holder).bind(list.get(position),position,clickListener);
         }
     }
 
@@ -61,4 +68,6 @@ public class ListForecastAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return VIEW_OTHER;
         }
     }
+
+
 }
