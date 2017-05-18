@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private Gson gson = new Gson();
     private ForecastDBHelper dbHelper;
     private static final String cityTarget = "Denpasar";
+    private DailyForecast dailyForecast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +92,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        if(error!=null){
-                            Log.e(TAG,error.getMessage());
+                        if (dbHelper.isDataAlreadyExist(cityTarget)) {
+                            //data is exist on sqlite, show it
+                            dailyForecast = dbHelper.getSavedForecast(cityTarget);
+                            showDataFromDB(dailyForecast);
                         }else{
-                            Log.e(TAG,"something error happened!");
+                            if(error!=null){
+                                Log.e(TAG,error.getMessage());
+                            }else{
+                                Log.e(TAG,"something error happened!");
+                            }
                         }
                     }
                 }
@@ -122,5 +129,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         for (WeatherItem item : data.getList()) {
             dbHelper.saveForecast(data.getCity(), item);
         }
+    }
+
+    private void showDataFromDB(DailyForecast data) {
+        list.clear();
+        for (WeatherItem item : data.getList()) {
+            list.add(item);
+        }
+        adapter.notifyDataSetChanged();
+        adapter.setClickListener(this);
     }
 }
