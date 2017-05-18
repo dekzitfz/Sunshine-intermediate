@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public void onItemClick(WeatherItem data, int position) {
         Intent detail = new Intent(MainActivity.this, DetailActivity.class);
         detail.putExtra("data",gson.toJson(data));
+        detail.putExtra("position",position);
         startActivity(detail);
     }
 }

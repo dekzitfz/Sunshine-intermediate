@@ -58,9 +58,9 @@ public class DetailActivity extends AppCompatActivity{
         }
 
         jsonData = getIntent().getStringExtra("data");
+        position = getIntent().getIntExtra("position", 0);
 
         if (jsonData != null) {
-            position = getIntent().getIntExtra("position", 0);
             weatherDetail = gson.fromJson(jsonData, WeatherItem.class);
         }else{
             Log.w(TAG,"data is null!");
