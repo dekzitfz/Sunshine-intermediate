@@ -167,6 +167,7 @@ public class ForecastDBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql,null);
 
         int total = cursor.getCount();
+        Log.d(TAG,"isDataAlreadyExist total -> "+total);
         cursor.close();
         db.close();
         return total > 0;

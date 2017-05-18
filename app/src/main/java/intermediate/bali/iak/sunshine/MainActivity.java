@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import intermediate.bali.iak.sunshine.adapter.ListForecastAdapter;
 import intermediate.bali.iak.sunshine.adapter.OnClickListener;
+import intermediate.bali.iak.sunshine.database.ForecastDBHelper;
 import intermediate.bali.iak.sunshine.model.DailyForecast;
 import intermediate.bali.iak.sunshine.model.DummyForecast;
 import intermediate.bali.iak.sunshine.model.WeatherItem;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private ListForecastAdapter adapter;
     private List<WeatherItem> list = new ArrayList<>();
     private Gson gson = new Gson();
+    private ForecastDBHelper dbHelper;
+    private static final String cityTarget = "Denpasar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             toolbar.setElevation(0);
         }
 
+        dbHelper = new ForecastDBHelper(this);
         setupRecyclerView();
     }
 
@@ -58,19 +62,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         getDataFromAPI();
     }
 
-    /*private void populateData(){
-        for(int i=0;i<10;i++){
-            DummyForecast dummy = new DummyForecast("Sunday","Rainy",23,18,123);
-            list.add(dummy);
-        }
-        adapter.notifyDataSetChanged();
-
-        getDataFromAPI();
-    }*/
-
     private void getDataFromAPI(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        final String URL = "http://api.openweathermap.org/data/2.5/forecast/daily?cnt=16&appid=6798555075668607c0a539f2093da3ab&units=metric&q=London";
+        final String URL = "http://api.openweathermap.org/data/2.5/forecast/daily?cnt=16&appid=6798555075668607c0a539f2093da3ab&units=metric&q="+cityTarget;
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
@@ -87,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                             }
                             adapter.notifyDataSetChanged();
                             adapter.setClickListener(MainActivity.this);
+
+                            saveForecastToDB(dailyForecast);
                         } catch (Exception e){
                             Log.e(TAG,e.getMessage());
                         }
@@ -114,5 +110,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         detail.putExtra("data",gson.toJson(data));
         detail.putExtra("position",position);
         startActivity(detail);
+    }
+
+    private void saveForecastToDB(DailyForecast data) {
+        if (dbHelper.isDataAlreadyExist(cityTarget)) {
+            //delete data first,
+            dbHelper.deleteForUpdate(cityTarget);
+        }
+
+        //insert new data
+        for (WeatherItem item : data.getList()) {
+            dbHelper.saveForecast(data.getCity(), item);
+        }
     }
 }
