@@ -6,6 +6,7 @@ package intermediate.bali.iak.sunshine.model;
 
 public class City {
     int id;
+    private String name;
 
     @Override
     public String toString() {
@@ -20,5 +21,13 @@ public class City {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
