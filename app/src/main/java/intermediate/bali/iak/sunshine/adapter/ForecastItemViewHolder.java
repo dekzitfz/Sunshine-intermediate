@@ -37,7 +37,7 @@ public class ForecastItemViewHolder extends RecyclerView.ViewHolder {
                         )
         );
 
-        day.setText(data.getReadableTime());
+        day.setText(data.getReadableTime(position));
         weatherDesc.setText(data.getWeather().get(0).getDescription());
         maxTemp.setText(data.getTemp().getResolvedTemp(data.getTemp().getMax()));
         minTemp.setText(data.getTemp().getResolvedTemp(data.getTemp().getMin()));
